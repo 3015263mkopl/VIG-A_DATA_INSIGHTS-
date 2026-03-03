@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIGÍA DATA INSIGHT - Análisis de Datos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #19377d;
+            --secondary-color: #000307;
+            --accent-color: #134faf;
+            --light-color: #193551;
+            --dark-color: #000000;
+            --gradient: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            color: var(--primary-color);
+            font-size: 50px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .logo-img {
+            height: 75px;
+            width: auto;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/><circle cx="50" cy="50" r="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/><line x1="50" y1="10" x2="50" y2="90" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/><line x1="10" y1="50" x2="90" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>');
+            background-size: 200px 200px;
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background: white;
+            color: var(--primary-color);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .section-title p {
+            color: #6c757d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* R Report Section */
+        .r-report {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .r-report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 15px;
+        }
+
+        .r-report-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .r-report-title i {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .r-report-title h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .r-report-content {
+            min-height: 400px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+
+        /* Power BI Dashboard Section */
+        .bi-dashboard {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+
+        .bi-dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 15px;
+        }
+
+        .bi-dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bi-dashboard-title i {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .bi-dashboard-title h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .bi-dashboard-content {
+            min-height: 500px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+
+        /* estlio de los creditos */
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .team-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid #19377d;
+        }
+
+        .team-card h3 {
+            margin-bottom: 5px;
+            color: #19377d;
+        }
+
+        .team-card span {
+            display: block;
+            font-weight: 600;
+            color: #134faf;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .team-card p {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        /* Footer */
+        footer {
+            background: var(--gradient);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 50px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="img/VDI_LOGOBLANCO.png" alt="Logo VGIA" class="logo-img">
+                    <div class="logo-text">
+                        <h1></h1>
+                        <span></span>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#informe-r">Informe R</a></li>
+                        <li><a href="#dashboard-bi">Dashboard Power BI</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                        <li><a href="#" onclick="mostrarCreditos()">Créditos</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div id="contenido-principal">
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Visualización y Análisis de Datos</h2>
+                <p>Transformamos sus datos en información valiosa para tomar decisiones estratégicas basadas en evidencia</p>
+                <a href="#informe-r" class="btn">Explorar Análisis</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Misión, Visión y Objetivos -->
+    <section class="section" id="nosotros">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestra Identidad</h2>
+                <p>Conoce la misión, visión y objetivos de VIGÍA DATA INSIGHT</p>
+            </div>
+
+            <div class="team-grid">
+
+                <div class="team-card">
+                    <h3>Misión</h3>
+                    <p>
+                        Transformar datos en información estratégica mediante análisis estadístico y herramientas de visualización, 
+                        apoyando la toma de decisiones basadas en evidencia.
+                    </p>
+                </div>
+
+                <div class="team-card">
+                    <h3>Visión</h3>
+                    <p>
+                        Ser una referencia en análisis de datos e inteligencia de negocios, ofreciendo soluciones innovadoras 
+                        y tecnológicas que generen impacto en organizaciones.
+                    </p>
+                </div>
+
+                <div class="team-card">
+                    <h3>Objetivo</h3>
+                    <p>
+                        Desarrollar reportes analíticos y dashboards interactivos que permitan interpretar datos 
+                        de forma clara, dinámica y eficiente.
+                    </p>
+            </div>
+
+        </div>
+    </div>
+
+    </section>
+    <!-- R Report Section -->
+    <section class="section" id="informe-r">
+        <div class="container">
+            <div class="section-title">
+                <h2>Informe de Análisis con R</h2>
+                <p>Exploramos patrones y tendencias utilizando técnicas estadísticas avanzadas con R</p>
+            </div>
+
+            <div class="r-report">
+                <div class="r-report-header">
+                    <div class="r-report-title">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Análisis Estadístico</h3>
+                    </div>
+                    <button class="btn">Descargar Informe</button>
+                </div>
+                
+                <!-- ESPACIO PARA AGREGAR TU INFORME DE R -->
+                <!-- Reemplaza este div con el código de tu informe de R -->
+                <div class="r-report-content">
+                    <div>
+                        <i class="fas fa-file-code" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>Aquí se insertará el informe generado con R</p>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Reemplaza este contenido con tu informe de R</p>
+                    </div>
+                </div>
+                <!-- FIN DEL ESPACIO PARA EL INFORME DE R -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Power BI Dashboard Section -->
+    <section class="section" id="dashboard-bi">
+        <div class="container">
+            <div class="section-title">
+                <h2>Dashboard Interactivo Power BI</h2>
+                <p>Visualice sus datos de forma interactiva con nuestro dashboard de Power BI</p>
+            </div>
+
+            <div class="bi-dashboard">
+                <div class="bi-dashboard-header">
+                    <div class="bi-dashboard-title">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Panel de Control de Datos</h3>
+                    </div>
+                    <button class="btn">Ver en Pantalla Completa</button>
+                </div>
+                
+                <!-- ESPACIO PARA AGREGAR TU DASHBOARD DE POWER BI -->
+                <!-- Reemplaza este div con el código de inserción de tu dashboard de Power BI -->
+                <div class="bi-dashboard-content">
+                    <div>
+                        <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <p>Aquí se insertará el dashboard de Power BI</p>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Reemplaza este contenido con el código de inserción de tu dashboard</p>
+                    </div>
+                </div>
+                <!-- FIN DEL ESPACIO PARA EL DASHBOARD DE POWER BI -->
+            </div>
+        </div>
+    </section>
+
+    </div>
+
+    <!-- setcion de los creditos -->
+    <section class="section" id="creditos" style="display:none;">
+    <div class="container">
+        
+        <button class="btn" onclick="volverInicio()" style="margin-bottom:30px;">
+            ← Volver al Inicio
+         </button>
+        <div class="section-title">
+            <h2>Equipo del Proyecto</h2>
+            <p>Personas que hicieron posible el desarrollo de VIGÍA DATA INSIGHT</p>
+        </div>
+
+        <div class="team-grid">
+            
+            <div class="team-card">
+                <img src="img/TVWSXFBLABHBREMEQMLORL7TCA.avif" alt="Perfil">
+                <h3>Yissus </h3>
+                <span>Desarrollador Frontend</span>
+                <p>Diseñó la estructura visual y desarrolló la interfaz web responsiva.</p>
+            </div>
+
+            <div class="team-card">
+                <img src="" alt="Perfil">
+                <h3>Gustavo</h3>
+                <span>Analista de Datos</span>
+                <p>Encargada del procesamiento y análisis estadístico en R.</p>
+            </div>
+
+            <div class="team-card">
+                <img src="" alt="Perfil">
+                <h3>Neiver</h3>
+                <span>Especialista en Power BI</span>
+                <p>Desarrolló el dashboard interactivo para visualización estratégica.</p>
+            </div>
+
+            <div class="team-card">
+                <img src="" alt="Perfil">
+                <h3>Angel</h3>
+                <span>Diseñadora UX/UI</span>
+                <p>Optimización de experiencia de usuario y diseño visual.</p>
+            </div>
+
+            <div class="team-card">
+                <img src="" alt="Perfil">
+                <h3>Diego</h3>
+                <span>Backend Developer</span>
+                <p>Integración de datos y lógica del sistema.</p>
+            </div>
+
+            <div class="team-card">
+                <img src="" alt="Perfil">
+                <h3>Narling</h3>
+                <span>Project Manager</span>
+                <p>Coordinación del equipo y planificación del proyecto.</p>
+            </div>
+
+        </div>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sobre VIGÍA DATA INSIGHT</h3>
+                    <p>Especialistas en análisis de datos y visualización para la toma de decisiones estratégicas.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#informe-r">Informe R</a></li>
+                        <li><a href="#dashboard-bi">Dashboard Power BI</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@vigia-data.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 VIGÍA DATA INSIGHT. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+    <script>
+        // Script para navegación suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Script para cambiar el estilo del header al hacer scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+
+    <script>
+        function mostrarCreditos() {
+            document.getElementById("contenido-principal").style.display = "none";
+            document.getElementById("creditos").style.display = "block";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function volverInicio() {
+            document.getElementById("contenido-principal").style.display = "block";
+            document.getElementById("creditos").style.display = "none";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+    </script>
+
+</body>
+</html>
+
